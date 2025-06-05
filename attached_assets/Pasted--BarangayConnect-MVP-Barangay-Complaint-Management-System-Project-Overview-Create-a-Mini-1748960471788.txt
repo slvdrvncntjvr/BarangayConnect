@@ -1,0 +1,254 @@
+# BarangayConnect MVP - Barangay Complaint Management System
+
+## Project Overview
+Create a **Minimum Viable Product** for BarangayConnect - a modern web-based complaint management system for Philippine barangays. Build a professional, mobile-first web application that citizens can actually use on their phones and computers.
+
+## Tech Stack (Modern Web)
+- **Frontend**: HTML5 + CSS3 + Vanilla JavaScript
+- **Backend**: Node.js + Express.js
+- **Database**: SQLite (with sqlite3 package)
+- **File Storage**: Local uploads with multer
+- **Styling**: CSS Grid/Flexbox + Mobile-first responsive design
+- **Deployment Ready**: Can be deployed to Railway, Render, or similar platforms
+
+## Project Structure
+```
+barangay-connect/
+├── server.js              # Express server entry point
+├── database.db            # SQLite database file
+├── package.json           # Dependencies
+├── public/                # Static files
+│   ├── index.html         # Homepage
+│   ├── file-complaint.html
+│   ├── track-complaint.html
+│   ├── admin.html
+│   ├── css/
+│   │   └── style.css      # Main stylesheet
+│   ├── js/
+│   │   ├── main.js        # Shared functions
+│   │   ├── complaint.js   # File complaint logic
+│   │   ├── tracking.js    # Tracking logic
+│   │   └── admin.js       # Admin panel logic
+│   └── uploads/           # Uploaded files
+├── routes/                # API routes
+│   ├── complaints.js      # Complaint CRUD operations
+│   └── admin.js          # Admin operations
+└── utils/
+    └── database.js        # Database initialization
+```
+
+## Core MVP Features
+
+### 1. Homepage (`public/index.html`)
+**Clean landing page with:**
+- Professional header with "BarangayConnect" branding
+- Hero section explaining the service
+- Quick stats (total complaints, resolved this month)
+- Navigation cards to main features
+- Mobile-responsive design
+- Modern CSS styling (gradients, shadows, animations)
+
+### 2. File Complaint (`public/file-complaint.html`)
+**Mobile-first complaint form:**
+- **Personal Info**: Full Name, Contact Number, Email (optional)
+- **Complaint Details**: 
+  - Category (dropdown): Noise Complaint, Garbage Collection, Street Lighting, Road Repair, Water Supply, Peace & Order, Business Permit, Other
+  - Description (textarea with character count)
+  - Location/Address
+  - Priority Level (Low, Medium, High)
+- **Photo Upload**: Single file upload with preview
+- **Form Validation**: Client-side + server-side validation
+- **Auto-generated ID**: Format BC-2024-XXXX
+- **Success Page**: Shows complaint ID and tracking instructions
+
+### 3. Track Complaint (`public/track-complaint.html`)
+**Simple tracking interface:**
+- Large search input for complaint ID
+- Status display with visual indicators:
+  - 🟡 Submitted (yellow)
+  - 🔵 Under Review (blue)  
+  - 🟢 Resolved (green)
+- Complaint details card showing all information
+- Status timeline/progress bar
+- Admin notes section (if any)
+- "Report an Issue" button for follow-ups
+
+### 4. Admin Panel (`public/admin.html`)
+**Simple admin dashboard:**
+- Login form (username: admin, password: admin123)
+- Dashboard with complaint statistics
+- Complaints table with:
+  - Sortable columns (Date, Status, Priority, Category)
+  - Quick status update dropdown
+  - View details modal
+  - Add notes functionality
+- Bulk actions (mark multiple as resolved)
+- Export complaints as CSV
+
+## API Endpoints
+
+### Complaint Routes (`/api/complaints`)
+```javascript
+POST /api/complaints          # Create new complaint
+GET /api/complaints/:id       # Get complaint by ID
+GET /api/complaints           # Get all complaints (admin only)
+PUT /api/complaints/:id       # Update complaint status
+POST /api/complaints/:id/notes # Add admin note
+```
+
+### Admin Routes (`/api/admin`)
+```javascript
+POST /api/admin/login         # Admin authentication
+GET /api/admin/stats          # Dashboard statistics
+GET /api/admin/export         # Export complaints CSV
+```
+
+## Database Schema (SQLite)
+
+```sql
+-- complaints table
+CREATE TABLE complaints (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    complaint_id TEXT UNIQUE NOT NULL,
+    full_name TEXT NOT NULL,
+    contact_number TEXT NOT NULL,
+    email TEXT,
+    category TEXT NOT NULL,
+    description TEXT NOT NULL,
+    location TEXT NOT NULL,
+    priority TEXT NOT NULL DEFAULT 'Low',
+    status TEXT DEFAULT 'Submitted',
+    photo_filename TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- admin_notes table
+CREATE TABLE admin_notes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    complaint_id TEXT NOT NULL,
+    note TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (complaint_id) REFERENCES complaints (complaint_id)
+);
+
+-- admin_sessions table (simple session management)
+CREATE TABLE admin_sessions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    session_token TEXT UNIQUE NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    expires_at DATETIME NOT NULL
+);
+```
+
+## Key Requirements
+
+### Frontend Requirements:
+1. **Mobile-First Design** - Works perfectly on phones (primary device for citizens)
+2. **Fast Loading** - Minimal JavaScript, optimized images
+3. **Professional Appearance** - Looks like a real government service
+4. **Accessibility** - Proper labels, contrast, keyboard navigation
+5. **Offline-Friendly** - Basic functionality works without internet
+
+### Backend Requirements:
+1. **RESTful API** - Clean, predictable endpoints
+2. **Input Validation** - Sanitize all user inputs
+3. **Error Handling** - Proper HTTP status codes and error messages
+4. **File Upload Security** - Validate file types and sizes
+5. **Session Management** - Simple token-based admin auth
+
+### Technical Requirements:
+1. **Single Command Start** - `npm start` should work
+2. **Environment Variables** - For database path, admin credentials
+3. **CORS Enabled** - For frontend-backend communication
+4. **Static File Serving** - Serve HTML, CSS, JS, images
+5. **Production Ready** - Can be deployed immediately
+
+### UI/UX Requirements:
+1. **Modern Design** - Clean, minimal, professional
+2. **Intuitive Navigation** - Citizens can use without training
+3. **Clear Feedback** - Loading states, success/error messages
+4. **Form Validation** - Real-time validation with helpful messages
+5. **Status Indicators** - Visual status badges and progress indicators
+
+## Sample Data
+Pre-populate with 5 sample complaints:
+- Mix of categories (noise, garbage, road repair, lighting, water)
+- Different priorities and statuses
+- Realistic Filipino names and barangay addresses
+- Sample admin notes showing resolution process
+
+## Success Criteria
+The MVP is complete when:
+- [ ] Citizens can file complaints on mobile phones
+- [ ] Complaint form validates and saves to database
+- [ ] Tracking page shows complaint details by ID
+- [ ] Admin can login and view all complaints
+- [ ] Admin can update status and add notes
+- [ ] File upload works and displays photos
+- [ ] App looks professional and trustworthy
+- [ ] All pages are mobile-responsive
+- [ ] No JavaScript errors in browser console
+- [ ] Can be deployed to free hosting platform
+
+## Package.json Dependencies
+```json
+{
+  "name": "barangay-connect",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.0",
+    "sqlite3": "^5.1.0",
+    "multer": "^1.4.0",
+    "cors": "^2.8.0",
+    "uuid": "^9.0.0",
+    "helmet": "^7.0.0"
+  }
+}
+```
+
+## Design Guidelines
+
+### Color Scheme:
+- **Primary**: #2563eb (Blue - trust, government)
+- **Success**: #16a34a (Green - resolved)
+- **Warning**: #eab308 (Yellow - pending)
+- **Danger**: #dc2626 (Red - urgent)
+- **Neutral**: #64748b (Gray - text)
+
+### Typography:
+- **Headers**: Inter or System UI fonts
+- **Body**: -apple-system, BlinkMacSystemFont, "Segoe UI"
+- **Sizes**: Mobile-first responsive sizing
+
+### Components:
+- **Cards**: Subtle shadows, rounded corners
+- **Buttons**: Solid, high contrast, touch-friendly
+- **Forms**: Clear labels, inline validation
+- **Status Badges**: Color-coded, readable
+
+## What NOT to Include in MVP
+- User registration/accounts
+- Email/SMS notifications  
+- Advanced analytics/reporting
+- Multiple admin roles
+- Public complaint board
+- Payment processing
+- Real-time updates
+- Complex search/filtering
+- Multi-language support
+- API rate limiting
+
+## Expected Outcome
+A professional web application that:
+1. **Citizens can use on their phones** to file complaints
+2. **Looks like a real government service** - trustworthy and official
+3. **Barangay staff can manage easily** - simple admin interface
+4. **Works immediately** - no complex setup or configuration
+5. **Can be deployed for free** - on platforms like Railway or Render
+
+The system should feel modern, fast, and reliable - something citizens would actually want to use instead of going to the barangay office in person.

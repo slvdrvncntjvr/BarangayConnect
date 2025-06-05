@@ -1,0 +1,79 @@
+BarangayConnect
+A Digital Complaint Management System for Safer and More Transparent Communities
+
+Brief Overview of Problem Statement
+Local barangays in the Philippines often rely on outdated, paper-based systems for managing citizen complaints. These processes are prone to delays, lost documentation, and lack of visibility, making it harder to address safety concerns and undermining trust in local institutions. Without a proper digital system, citizens are left in the dark about the progress of their reports, leading to frustration and disengagement.
+
+Brief Overview of Proposed Solution
+BarangayConnect is a web-based platform that modernizes how complaints are handled at the barangay level. Our prototype enables:
+
+24/7 Complaint Filing: Citizens can submit issues through a responsive website, attach photo evidence, and automatically receive a unique complaint ID.
+
+Real-Time Status Tracking: A visual status bar allows users to follow their complaint’s progress—from "Received" to "Resolved."
+
+Admin Dashboard for Barangay Officials: Officials can log in to review, update, and track complaints with the ability to leave internal notes and view summaries.
+
+Clean, Accessible Design: Mobile-first design ensures the platform is usable on most devices, prioritizing accessibility for all residents.
+
+This prototype targets a very real pain point in local governance and is built with a clear, practical scope based on community needs and feasibility.
+
+Technology Stack
+Frontend
+
+React 18 + TypeScript
+
+Tailwind CSS with shadcn/ui
+
+React Hook Form + Zod (validation)
+
+Wouter (routing)
+
+TanStack Query (data management)
+
+Backend
+
+Node.js + Express.js
+
+TypeScript
+
+SQLite with Drizzle ORM
+
+Multer (file uploads)
+
+UUID (complaint ID generation)
+
+Security & Hosting
+
+Basic session-based authentication
+
+Input sanitization & CORS protection
+
+Hosted on Replit
+
+Mobile-responsive (CSS Grid/Flexbox)
+
+Expected Outcomes
+Faster and More Organized Complaint Handling: Reduces paperwork, shortens queues, and simplifies tracking.
+
+Increased Transparency and Public Trust: Citizens can see the progress of their reports, improving accountability.
+
+Better Local Governance Tools: Barangay officials can manage and respond to issues more efficiently.
+
+Foundations for Scalable Digital Transformation: This prototype lays the groundwork for future tech integrations.
+
+Next Steps & Future Plans
+We recognize this is just the beginning. Our goals after the hackathon include:
+
+Expanding Admin Tools: Adding features like report filtering, status metrics, and audit trails.
+
+Role-Based Access Control: Differentiating logins for captains, secretaries, and assigned barangay officers.
+
+SMS/Email Notifications: Updating users when complaints progress.
+
+Improved Deployment Setup: Exploring platforms like Render or Railway for more scalable and reliable hosting.
+
+Data Privacy & Logging: Implementing more robust user session and log history features.
+
+Barangay Integration: Collaborating with actual barangay officials for feedback and testing in the real world.
+
+We built this platform not just to win a hackathon, but because we believe that accessible technology can strengthen democracy at the most local level.
